@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{6E272D95-22AA-464C-8D61-FF51DAD5C79D}</ProjectGuid>
+    <ProjectGuid>{751B08C5-FA05-4F38-BCB8-A2FC1882E66C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GenealogyTree</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
@@ -151,7 +151,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GenealogyTree.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
