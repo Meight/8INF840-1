@@ -2,14 +2,10 @@
 #include "Person.h"
 
 
-Person::Person(const string &firstName, const string &lastName, int birthYear, Color eyeColor) : firstName(firstName),
-lastName(lastName),
-birthYear(birthYear),
-eyeColor(eyeColor) {}
+Person::Person(const string &firstName, const string &lastName, int birthYear, Color eyeColor) : 
+	firstName(firstName), lastName(lastName), birthYear(birthYear), eyeColor(eyeColor) {}
 
-Person::~Person() {
-
-}
+Person::~Person() {}
 
 const string &Person::getFirstName() const {
 	return firstName;
