@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenealogyTree", "GenealogyTree\GenealogyTree.vcxproj", "{751B08C5-FA05-4F38-BCB8-A2FC1882E66C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Factory", "Factory\Factory.vcxproj", "{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{751B08C5-FA05-4F38-BCB8-A2FC1882E66C}.Release|x64.Build.0 = Release|x64
 		{751B08C5-FA05-4F38-BCB8-A2FC1882E66C}.Release|x86.ActiveCfg = Release|Win32
 		{751B08C5-FA05-4F38-BCB8-A2FC1882E66C}.Release|x86.Build.0 = Release|Win32
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Debug|x64.ActiveCfg = Debug|x64
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Debug|x64.Build.0 = Debug|x64
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Debug|x86.ActiveCfg = Debug|Win32
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Debug|x86.Build.0 = Debug|Win32
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Release|x64.ActiveCfg = Release|x64
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Release|x64.Build.0 = Release|x64
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Release|x86.ActiveCfg = Release|Win32
+		{05D8D5AD-3387-4C2A-A575-AA0E224B31CC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
