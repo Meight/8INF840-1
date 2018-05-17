@@ -113,13 +113,14 @@ int main(void)
 	double firstPlayerPoints = Game::countPoints(firstPlayerEarnings);
 	double secondPlayerPoints = Game::countPoints(secondPlayerEarnings);
 
-	if (firstPlayerEarnings > secondPlayerEarnings)
-		std::cout << "Le premier joueur l'emporte avec " << firstPlayerPoints << " contre " << secondPlayerPoints << ".";
+	if (firstPlayerPoints > secondPlayerPoints)
+		std::cout << "Le premier joueur l'emporte avec " << firstPlayerPoints << " points contre " << secondPlayerPoints << " points.\n";
 
-	if (firstPlayerEarnings < secondPlayerEarnings)
-		std::cout << "Le second joueur l'emporte avec " << secondPlayerPoints << " contre " << firstPlayerPoints << ".";
+	if (firstPlayerPoints < secondPlayerPoints)
+		std::cout << "Le second joueur l'emporte avec " << secondPlayerPoints << " points contre " << firstPlayerPoints << " points.\n";
 
-	if (firstPlayerEarnings == secondPlayerEarnings)
-		std::cout << "Le jeu se solde par une égalité avec " << firstPlayerPoints << ".";
+	if (firstPlayerPoints == secondPlayerPoints)
+		std::cout << "Le jeu se solde par une égalité avec " << firstPlayerPoints << " points.\n";
 
+	system("PAUSE");
 }
