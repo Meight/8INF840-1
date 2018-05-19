@@ -61,3 +61,17 @@ void TreeNode::print(TraversalMethod method) {
             break;
     }
 }
+
+void TreeNode::addSibling(TreeNode *newSibling) {
+    if (nextSibling != nullptr)
+        nextSibling->addSibling(newSibling);
+    else
+        nextSibling = newSibling;
+}
+
+void TreeNode::addChild(TreeNode *newChild) {
+    if (firstChild != nullptr)
+        firstChild->addSibling(newChild);
+    else
+        firstChild = newChild;
+}

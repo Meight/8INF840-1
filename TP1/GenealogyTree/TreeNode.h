@@ -13,6 +13,8 @@ private:
 public:
 	TreeNode();
 	~TreeNode();
+    void addSibling(TreeNode *newSibling);
+    void addChild(TreeNode *newChild);
     void print(TraversalMethod method);
 
     T *getData() const;
