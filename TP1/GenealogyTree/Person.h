@@ -5,7 +5,7 @@
 
 using namespace std;
 
-enum Color { blue, brown, green };
+enum Color { BLUE, BROWN, GREEN };
 
 class Person
 {
