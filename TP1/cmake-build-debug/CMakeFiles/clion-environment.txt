@@ -1,0 +1,3 @@
+ToolSet: 2.10.0@S:\Development\Cygwin
+Options: 
+CMake: 3.8.2@S:\Development\CLion\2017.2.2\bin\cmake_cygwin\bin\cmake.exe

@@ -2,8 +2,9 @@
 #include "TreeNode.h"
 
 template <class T>
-TreeNode::TreeNode()
+TreeNode::TreeNode(T data)
 {
+	this->data = data;
 }
 
 template <class T>
@@ -11,10 +12,12 @@ TreeNode::~TreeNode()
 {
 }
 
+template <class T>
 T *TreeNode::getData() const {
     return data;
 }
 
+template <class T>
 void TreeNode::print(TraversalMethod method) {
     switch (method) {
         case PRE_ORDER:
@@ -62,6 +65,7 @@ void TreeNode::print(TraversalMethod method) {
     }
 }
 
+template <class T>
 void TreeNode::addSibling(TreeNode *newSibling) {
     if (nextSibling != nullptr)
         nextSibling->addSibling(newSibling);
@@ -69,6 +73,7 @@ void TreeNode::addSibling(TreeNode *newSibling) {
         nextSibling = newSibling;
 }
 
+template <class T>
 void TreeNode::addChild(TreeNode *newChild) {
     if (firstChild != nullptr)
         firstChild->addSibling(newChild);

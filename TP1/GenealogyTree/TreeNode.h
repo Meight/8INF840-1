@@ -1,7 +1,5 @@
 #pragma once
 
-#include "NTree.h"
-
 template <class T>
 class TreeNode
 {
@@ -11,7 +9,7 @@ private:
 	TreeNode *firstChild;
 
 public:
-	TreeNode();
+	TreeNode(T data);
 	~TreeNode();
     void addSibling(TreeNode *newSibling);
     void addChild(TreeNode *newChild);
