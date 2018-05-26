@@ -1,28 +1,20 @@
-/*
- * @author Matthieu Le Boucher <matt.leboucher@gmail.com>
- */
+#pragma once
 
-#ifndef TP1_NTREE_H
-#define TP1_NTREE_H
-
-#include <iostream>
 #include "TreeNode.h"
+#include <stdio.h>
 
 using namespace std;
 
-enum TraversalMethod { PRE_ORDER, IN_ORDER, POST_ORDER };
-
 template <class T>
-class NTree {
+class NTree
+{
 private:
-    TreeNode<T> *root;
+	TreeNode<T> *root;
 public:
-    NTree();
-    ~NTree();
+	NTree();
+	~NTree();
 
-    int getDepth();
-    void print(TraversalMethod method);
+	int getDepth();
+	void print(TraversalMethod method);
 };
 
-
-#endif //TP1_NTREE_H

@@ -1,5 +1,6 @@
 #pragma once
 
+enum TraversalMethod { PRE_ORDER, IN_ORDER, POST_ORDER };
 template <class T>
 class TreeNode
 {

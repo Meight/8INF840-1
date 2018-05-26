@@ -1,26 +1,28 @@
-/*
- * @author Matthieu Le Boucher <matt.leboucher@gmail.com>
- */
-
+#include "stdafx.h"
 #include "NTree.h"
+#include "Constants.h"
 
-NTree::NTree() {}
-
-NTree::~NTree() {}
-
-int NTree::getDepth() {
-    return 0;
+template<class T>
+NTree<T>::NTree()
+{
 }
 
-void NTree::print(TraversalMethod method) {
-    switch (method) {
-        case PRE_ORDER:
-            if (root)
-            break;
-        case IN_ORDER:
-            break;
-        case POST_ORDER:
-            break;
-    }
+template<class T>
+NTree<T>::~NTree()
+{
 }
 
+template<class T>
+int NTree<T>::getDepth()
+{
+	return 0;
+}
+
+template<class T>
+void NTree<T>::print(TraversalMethod method)
+{
+	if (root != nullptr)
+		root->print(method);
+	else
+		cout << Constants::EMPTY_TREE << endl;
+}
