@@ -22,6 +22,11 @@ Color Person::getEyeColor() const {
 	return eyeColor;
 }
 
+Gender Person::getGender() const
+{
+	return gender;
+}
+
 bool Person::operator==(const Person & other)
 {
 	return other.firstName == firstName && other.lastName == lastName && other.birthYear == birthYear;
