@@ -45,6 +45,9 @@ void TreeNode<T>::print(TraversalMethod method) {
 		cout << "Pre order traversal." << endl;
 		cout << data << endl;
 
+		for (const auto& currentNode : children)
+			currentNode->print(method);
+
 		break;
 	case IN_ORDER:
 		cout << "In order traversal." << endl;
@@ -81,4 +84,5 @@ void TreeNode<T>::addSibling(TreeNode<T> *newSibling) {
 template <class T>
 void TreeNode<T>::addChild(TreeNode<T> *newChild) {
 	children.push_back(newChild);
+	cout << data << " has a new child: " << newChild->getData() << endl;
 }

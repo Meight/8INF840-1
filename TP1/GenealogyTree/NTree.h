@@ -18,6 +18,7 @@ public:
 	int getDepth();
 	void print(TraversalMethod method);
 	void insertNode(TreeNode<T> *parent, TreeNode<T> *node);
+	void insertNodeAfterRoot(TreeNode<T> *node);
 };
 
 template<class T>
@@ -52,4 +53,10 @@ void NTree<T>::insertNode(TreeNode<T> *parent, TreeNode<T> *node)
 {
 	if (parent != nullptr)
 		parent->addChild(node);
+}
+
+template<class T>
+inline void NTree<T>::insertNodeAfterRoot(TreeNode<T>* node)
+{
+	root->addChild(node);
 }
