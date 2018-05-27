@@ -65,18 +65,28 @@ void TreeNode<T>::print(TraversalMethod method) {
     }
 }
 
+template<class T>
+int TreeNode<T>::getHeight()
+{
+	if (firstChild == nullptr)
+		return 0;
+
+	int maximalDepth = 0;
+
+	for (currentNode = children.begin(); currentNode != children.end(); currentNode++, i++) {
+		maximalDepth = max(maximalDepth, currentNode.getHeight());
+	}
+
+	return maximalDepth + 1;
+}
+
 template <class T>
 void TreeNode<T>::addSibling(TreeNode *newSibling) {
-    if (nextSibling != nullptr)
-        nextSibling->addSibling(newSibling);
-    else
-        nextSibling = newSibling;
+	if (parent != nullptr)
+		parent->addChild(newSibling);
 }
 
 template <class T>
 void TreeNode<T>::addChild(TreeNode *newChild) {
-    if (firstChild != nullptr)
-        firstChild->addSibling(newChild);
-    else
-        firstChild = newChild;
+	children.push_back(newChild);
 }

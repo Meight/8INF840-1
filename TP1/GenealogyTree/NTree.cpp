@@ -15,7 +15,7 @@ NTree<T>::~NTree()
 template<class T>
 int NTree<T>::getDepth()
 {
-	return 0;
+	return (root != nullptr) ? root->getHeight() : 0;
 }
 
 template<class T>
