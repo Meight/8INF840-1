@@ -4,7 +4,9 @@
 
 #include "stdafx.h"
 #include "FamilyTree.h"
+#include <stdio.h>
 
+using namespace std;
 
 int FamilyTree::getSize()
 {
@@ -29,6 +31,12 @@ void FamilyTree::addMember(const Person & person)
 
 void FamilyTree::listDescendants(Person person, TraversalMethod method)
 {
+	TreeNode<Person>* associatedNode = tree->findNode(person);
+	
+	if (associatedNode != nullptr)
+		associatedNode->print(method);
+	else
+		cout << Constants::ELEMENT_NOT_FOUND << endl;
 }
 
 void FamilyTree::listByEyesColor(Color color)
