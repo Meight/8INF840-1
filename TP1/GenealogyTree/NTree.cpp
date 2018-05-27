@@ -26,3 +26,10 @@ void NTree<T>::print(TraversalMethod method)
 	else
 		cout << Constants::EMPTY_TREE << endl;
 }
+
+template<class T>
+void NTree<T>::insertNode(TreeNode<T> *parent, TreeNode<T> *node)
+{
+	if (parent != nullptr)
+		parent->addChild(node);
+}

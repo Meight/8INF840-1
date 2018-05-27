@@ -16,5 +16,6 @@ public:
 
 	int getDepth();
 	void print(TraversalMethod method);
+	void insertNode(TreeNode<T> *parent, TreeNode<T> *node);
 };
 
