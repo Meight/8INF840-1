@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Person.h"
 
-
-Person::Person(const string &firstName, const string &lastName, int birthYear, Color eyeColor) : 
+Person::Person(const string &firstName, const string &lastName, int birthYear, Color eyeColor) :
 	firstName(firstName), lastName(lastName), birthYear(birthYear), eyeColor(eyeColor) {}
 
 Person::~Person() {}
@@ -21,4 +20,10 @@ int Person::getBirthYear() const {
 
 Color Person::getEyeColor() const {
 	return eyeColor;
+}
+
+std::ostream & operator<<(std::ostream & _stream, Person const & person)
+{
+	_stream << person.getFirstName() << " " << person.getLastName();
+	return _stream;
 }
