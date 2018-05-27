@@ -37,3 +37,13 @@ std::ostream & operator<<(std::ostream & _stream, Person const & person)
 	_stream << person.getFirstName() << " " << person.getLastName();
 	return _stream;
 }
+
+Male::Male(const string & firstName, const string & lastName, int birthYear, Color eyeColor) : Person(firstName, lastName, birthYear, eyeColor)
+{
+	gender = MALE;
+}
+
+Female::Female(const string & firstName, const string & lastName, int birthYear, Color eyeColor) : Person(firstName, lastName, birthYear, eyeColor)
+{
+	gender = FEMALE;
+}

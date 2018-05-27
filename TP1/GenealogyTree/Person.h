@@ -15,6 +15,8 @@ public:
 	string lastName;
 	int birthYear;
 	Color eyeColor;
+
+protected:
 	Gender gender;
 
 public:
@@ -30,3 +32,12 @@ public:
 	bool operator==(const Person & other);
 };
 
+class Male : public Person {
+public:
+	Male(const string &firstName, const string &lastName, int birthYear, Color eyeColor);
+};
+
+class Female : public Person {
+public:
+	Female(const string &firstName, const string &lastName, int birthYear, Color eyeColor);
+};
