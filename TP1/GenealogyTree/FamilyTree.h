@@ -2,10 +2,6 @@
  * @author Matthieu Le Boucher <matt.leboucher@gmail.com>
  */
 
-#ifndef TP1_FAMILYTREE_H
-#define TP1_FAMILYTREE_H
-
-
 #include "NTree.h"
 #include "Person.h"
 
@@ -14,13 +10,14 @@ private:
     NTree<Person> *tree;
 
 public:
-    FamilyTree();
+    FamilyTree(const Person &person);
+	~FamilyTree();
+
     int getSize();
-    void addMember(const Person &person);
+	void print(TraversalMethod method);
+    void addMember(const Person & parent, const Person &person);
+	void addMember(const Person & person);
     void listDescendants(Person person, TraversalMethod method);
     void listByEyesColor(Color color);
     float getMeanAge();
 };
-
-
-#endif //TP1_FAMILYTREE_H

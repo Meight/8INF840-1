@@ -22,6 +22,11 @@ Color Person::getEyeColor() const {
 	return eyeColor;
 }
 
+bool Person::operator==(const Person & other)
+{
+	return other.firstName == firstName && other.lastName == lastName && other.birthYear == birthYear;
+}
+
 std::ostream & operator<<(std::ostream & _stream, Person const & person)
 {
 	_stream << person.getFirstName() << " " << person.getLastName();

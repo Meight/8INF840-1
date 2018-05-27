@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ public:
     void addChild(TreeNode<T> *newChild);
     void print(TraversalMethod method);
 	int getHeight();
+
+	TreeNode<T>* findNode(T data);
 
     T getData() const;
 };
@@ -42,7 +45,6 @@ template <class T>
 void TreeNode<T>::print(TraversalMethod method) {
 	switch (method) {
 	case PRE_ORDER:
-		cout << "Pre order traversal." << endl;
 		cout << data << endl;
 
 		for (const auto& currentNode : children)
@@ -54,7 +56,10 @@ void TreeNode<T>::print(TraversalMethod method) {
 
 		break;
 	case POST_ORDER:
-		cout << "Post order traversal." << endl;
+		for (const auto& currentNode : children)
+			currentNode->print(method);
+
+		cout << data << endl;
 
 		break;
 	}
@@ -63,16 +68,33 @@ void TreeNode<T>::print(TraversalMethod method) {
 template<class T>
 int TreeNode<T>::getHeight()
 {
-	if (firstChild == nullptr)
+	if (children.empty())
 		return 0;
 
 	int maximalDepth = 0;
 
-	for (currentNode = children.begin(); currentNode != children.end(); currentNode++, i++) {
-		maximalDepth = max(maximalDepth, currentNode.getHeight());
+	for (const auto& currentNode : children) {
+		maximalDepth = std::max(maximalDepth, currentNode->getHeight());
 	}
 
 	return maximalDepth + 1;
+}
+
+template<class T>
+inline TreeNode<T>* TreeNode<T>::findNode(T dataToFind)
+{
+	if (data == dataToFind)
+		return this;
+	else {
+		for (const auto& currentNode : children) {
+			TreeNode<T>* foundNode = currentNode->findNode(dataToFind);
+
+			if (foundNode != nullptr)
+				return foundNode;
+		}
+	}
+
+	return nullptr;
 }
 
 template <class T>
@@ -84,5 +106,4 @@ void TreeNode<T>::addSibling(TreeNode<T> *newSibling) {
 template <class T>
 void TreeNode<T>::addChild(TreeNode<T> *newChild) {
 	children.push_back(newChild);
-	cout << data << " has a new child: " << newChild->getData() << endl;
 }

@@ -24,5 +24,6 @@ public:
 	int getBirthYear() const;
 	Color getEyeColor() const;
 	friend std::ostream & operator<<(std::ostream & _stream, Person const & person);
+	bool operator==(const Person & other);
 };
 

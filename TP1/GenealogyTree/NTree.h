@@ -15,10 +15,11 @@ public:
 	NTree(T data);
 	~NTree();
 
-	int getDepth();
+	int getHeight();
 	void print(TraversalMethod method);
 	void insertNode(TreeNode<T> *parent, TreeNode<T> *node);
 	void insertNodeAfterRoot(TreeNode<T> *node);
+	TreeNode<T>* findNode(T data);
 };
 
 template<class T>
@@ -34,7 +35,7 @@ NTree<T>::~NTree()
 }
 
 template<class T>
-int NTree<T>::getDepth()
+int NTree<T>::getHeight()
 {
 	return (root != nullptr) ? root->getHeight() : 0;
 }
@@ -53,10 +54,18 @@ void NTree<T>::insertNode(TreeNode<T> *parent, TreeNode<T> *node)
 {
 	if (parent != nullptr)
 		parent->addChild(node);
+	else
+		root->addChild(node);
 }
 
 template<class T>
 inline void NTree<T>::insertNodeAfterRoot(TreeNode<T>* node)
 {
 	root->addChild(node);
+}
+
+template<class T>
+inline TreeNode<T>* NTree<T>::findNode(T data)
+{
+	return root->findNode(data);
 }
