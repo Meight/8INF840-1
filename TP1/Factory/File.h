@@ -62,16 +62,17 @@ inline void File<T>::enfiler(const T & e) {
 		cpt++;
 	}
 	else {
+		// si la file est pleine, on crée une nouvelle file deux fois plus grande
 		T* newTab = new T[2*tailleMax];
 		int currIndex = 0;
 		while (cpt > 0)
-			newTab[currIndex++] = defiler();
+			newTab[currIndex++] = defiler(); // on copie les éléments de l'ancienne file dans la nouvelle
 		newTab[currIndex++] = e; // on enfile le nouvel élément
 		tailleMax *= 2;
 		tete = 0;
 		queue = currIndex;
 		cpt = currIndex;
-		delete[] tab;
+		delete[] tab; // on détruit l'ancienne file
 		tab = newTab;
 	}
 }
