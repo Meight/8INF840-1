@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CardGameWar", "CardGameWar\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dictionnary", "Dictionnary\Dictionnary.vcxproj", "{FD44EE3B-0C9E-4BAA-962F-B2BE090897A9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "List", "List\List.vcxproj", "{63F084A8-FC28-46C4-B911-4E0F0FF96324}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{FD44EE3B-0C9E-4BAA-962F-B2BE090897A9}.Release|x64.Build.0 = Release|x64
 		{FD44EE3B-0C9E-4BAA-962F-B2BE090897A9}.Release|x86.ActiveCfg = Release|Win32
 		{FD44EE3B-0C9E-4BAA-962F-B2BE090897A9}.Release|x86.Build.0 = Release|Win32
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Debug|x64.ActiveCfg = Debug|x64
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Debug|x64.Build.0 = Debug|x64
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Debug|x86.ActiveCfg = Debug|Win32
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Debug|x86.Build.0 = Debug|Win32
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Release|x64.ActiveCfg = Release|x64
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Release|x64.Build.0 = Release|x64
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Release|x86.ActiveCfg = Release|Win32
+		{63F084A8-FC28-46C4-B911-4E0F0FF96324}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
