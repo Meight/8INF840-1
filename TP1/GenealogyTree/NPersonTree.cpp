@@ -19,3 +19,8 @@ float NPersonTree::getMeanAge()
 
 	return sum / numberOfNodes;
 }
+
+void NPersonTree::listByEyesColor(Color color, TraversalMethod method)
+{
+	static_cast<PersonNode*>(root)->listByEyesColor(color, method);
+}

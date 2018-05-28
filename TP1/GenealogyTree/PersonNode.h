@@ -9,5 +9,6 @@ public:
 	~PersonNode();
 
 	void accumulateAges(float &currentSum, int &numberOfNodes);
+	void listByEyesColor(Color color, TraversalMethod method);
 };
 

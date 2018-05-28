@@ -39,8 +39,19 @@ void FamilyTree::listDescendants(Person person, TraversalMethod method)
 		cout << Constants::ELEMENT_NOT_FOUND << endl;
 }
 
-void FamilyTree::listByEyesColor(Color color)
+void FamilyTree::listByEyesColor(Color color, TraversalMethod method)
 {
+	return tree->listByEyesColor(color, method);
+}
+
+void FamilyTree::listAncestorsWithSameEyeColor(Person person, TraversalMethod method)
+{
+	TreeNode<Person>* associatedNode = tree->findNode(person);
+
+	if (associatedNode != nullptr)
+		associatedNode->print(method);
+	else
+		cout << Constants::ELEMENT_NOT_FOUND << endl;
 }
 
 float FamilyTree::getMeanAge()

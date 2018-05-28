@@ -9,5 +9,6 @@ public:
 	NPersonTree(Person &person);
 	~NPersonTree();
 	float getMeanAge();
+	void listByEyesColor(Color color, TraversalMethod method);
 };
 
