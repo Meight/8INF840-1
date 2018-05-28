@@ -4,13 +4,14 @@
 
 #include "NTree.h"
 #include "Person.h"
+#include "NPersonTree.h"
 
 class FamilyTree {
 private:
-    NTree<Person> *tree;
+    NPersonTree *tree;
 
 public:
-    FamilyTree(const Person &person);
+    FamilyTree(Person &person);
 	~FamilyTree();
 
     int getSize();

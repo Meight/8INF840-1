@@ -45,13 +45,13 @@ void FamilyTree::listByEyesColor(Color color)
 
 float FamilyTree::getMeanAge()
 {
-	return 0.0f;
+	return tree->getMeanAge();
 }
 
 
-FamilyTree::FamilyTree(const Person &person)
+FamilyTree::FamilyTree(Person &person)
 {
-	tree = new NTree<Person>(person);
+	tree = new NPersonTree(person);
 }
 
 

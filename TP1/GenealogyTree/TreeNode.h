@@ -9,7 +9,7 @@ enum TraversalMethod { PRE_ORDER, IN_ORDER, POST_ORDER };
 template <class T>
 class TreeNode
 {
-private:
+protected:
 	T data;
 	TreeNode<T>* parent;
 	vector<TreeNode<T>*> children;

@@ -9,7 +9,7 @@ using namespace std;
 template <class T>
 class NTree
 {
-private:
+protected:
 	TreeNode<T> *root;
 public:
 	NTree(T data);

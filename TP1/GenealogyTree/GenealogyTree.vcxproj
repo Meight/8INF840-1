@@ -149,8 +149,10 @@
   <ItemGroup>
     <ClInclude Include="Constants.h" />
     <ClInclude Include="FamilyTree.h" />
+    <ClInclude Include="NPersonTree.h" />
     <ClInclude Include="NTree.h" />
     <ClInclude Include="Person.h" />
+    <ClInclude Include="PersonNode.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TreeNode.h" />
@@ -159,8 +161,10 @@
     <ClCompile Include="Constants.cpp" />
     <ClCompile Include="FamilyTree.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NPersonTree.cpp" />
     <ClCompile Include="NTree.cpp" />
     <ClCompile Include="Person.cpp" />
+    <ClCompile Include="PersonNode.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

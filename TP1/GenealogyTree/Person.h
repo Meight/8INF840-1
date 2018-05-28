@@ -26,6 +26,7 @@ public:
 	const string &getFirstName() const;
 	const string &getLastName() const;
 	int getBirthYear() const;
+	int getAge() const;
 	Color getEyeColor() const;
 	Gender getGender() const;
 	friend std::ostream & operator<<(std::ostream & _stream, Person const & person);

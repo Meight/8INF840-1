@@ -18,6 +18,11 @@ int Person::getBirthYear() const {
 	return birthYear;
 }
 
+int Person::getAge() const
+{
+	return 2018 - birthYear;
+}
+
 Color Person::getEyeColor() const {
 	return eyeColor;
 }
