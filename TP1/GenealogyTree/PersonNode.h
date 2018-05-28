@@ -10,5 +10,6 @@ public:
 
 	void accumulateAges(float &currentSum, int &numberOfNodes);
 	void listByEyesColor(Color color, TraversalMethod method);
+	void listAncestorsWithSameEyeColor(Color color);
 };
 

@@ -12,7 +12,6 @@ PersonNode::~PersonNode()
 
 void PersonNode::accumulateAges(float &currentSum, int &numberOfNodes)
 {
-	cout << "Accumulating age of " << data.getFirstName() << " which is " << data.getAge() << endl;
 	currentSum += data.getAge();
 	numberOfNodes++;
 
@@ -44,4 +43,12 @@ void PersonNode::listByEyesColor(Color color, TraversalMethod method)
 
 		break;
 	}
+}
+
+void PersonNode::listAncestorsWithSameEyeColor(Color color) {
+	if (data.getEyeColor() == color)
+		cout << data << endl;
+
+	if (parent != nullptr)
+		static_cast<PersonNode*>(parent)->listAncestorsWithSameEyeColor(color);
 }

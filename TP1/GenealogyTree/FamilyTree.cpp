@@ -44,12 +44,12 @@ void FamilyTree::listByEyesColor(Color color, TraversalMethod method)
 	return tree->listByEyesColor(color, method);
 }
 
-void FamilyTree::listAncestorsWithSameEyeColor(Person person, TraversalMethod method)
+void FamilyTree::listAncestorsWithSameEyeColor(Person person)
 {
 	TreeNode<Person>* associatedNode = tree->findNode(person);
 
 	if (associatedNode != nullptr)
-		associatedNode->print(method);
+		static_cast<PersonNode*>(associatedNode)->listAncestorsWithSameEyeColor(associatedNode->getData().eyeColor);
 	else
 		cout << Constants::ELEMENT_NOT_FOUND << endl;
 }

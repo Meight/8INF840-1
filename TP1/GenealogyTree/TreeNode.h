@@ -24,6 +24,7 @@ public:
 
 	TreeNode<T>* findNode(T data);
 
+	void setParent(TreeNode<T> *parent);
     T getData() const;
 };
 
@@ -34,6 +35,12 @@ TreeNode<T>::TreeNode(T nodeData) : data(nodeData), parent(NULL), children(NULL)
 template <class T>
 TreeNode<T>::~TreeNode()
 {
+}
+
+template<class T>
+inline void TreeNode<T>::setParent(TreeNode<T>* parentNode)
+{
+	parent = parentNode;
 }
 
 template <class T>
@@ -105,5 +112,6 @@ void TreeNode<T>::addSibling(TreeNode<T> *newSibling) {
 
 template <class T>
 void TreeNode<T>::addChild(TreeNode<T> *newChild) {
+	newChild->setParent(this);
 	children.push_back(newChild);
 }

@@ -20,6 +20,6 @@ public:
 	void addMember(const Person & person);
     void listDescendants(Person person, TraversalMethod method);
     void listByEyesColor(Color color, TraversalMethod method);
-	void listAncestorsWithSameEyeColor(Person person, TraversalMethod method);
+	void listAncestorsWithSameEyeColor(Person person);
     float getMeanAge();
 };
