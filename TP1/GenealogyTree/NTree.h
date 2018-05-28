@@ -32,6 +32,7 @@ NTree<T>::NTree(T data)
 template<class T>
 NTree<T>::~NTree()
 {
+	delete(root);
 }
 
 template<class T>

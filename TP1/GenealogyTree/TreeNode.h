@@ -35,6 +35,8 @@ TreeNode<T>::TreeNode(T nodeData) : data(nodeData), parent(NULL), children(NULL)
 template <class T>
 TreeNode<T>::~TreeNode()
 {
+	for (const auto& currentNode : children)
+		delete(currentNode);
 }
 
 template<class T>
