@@ -1,14 +1,22 @@
 #include "Frame.h"
+#include <thread>
+#include <future>
 
-bool Frame::isEqual(Frame *Frame)
+bool Frame::isEqual(Frame *frame)
 {
-	if ((this->m_red == Frame->m_red) && (this->m_blue == Frame->m_blue) && (this->m_green == Frame->m_green)) { return true; }
-	else { return false; }
+	if (frame->isGrey())
+	{
+		if (this->m_grey == frame->m_grey) { return true; }
+		else return false;
+	}
+	else
+	{
+		if ((this->m_red == frame->m_red) && (this->m_blue == frame->m_blue) && (this->m_green == frame->m_green)) { return true; }
+		else return false; 
+	}
 
 }
 
-
-const char* INPUT_FILENAME = "E:/Cours UQAC/Structures de données avancées/Devoir 2/Fichiers/Exo4/Images/chat.png";
 
 static bool isMonochrome(QuadTree<Frame> * nw, QuadTree<Frame> * ne, QuadTree<Frame> * se, QuadTree<Frame> * sw) {
 	return (sw->isLeaf() && nw->isLeaf() & ne->isLeaf() && se->isLeaf() && (sw->value().isEqual(&se->value())) && (sw->value().isEqual(&ne->value())) && (sw->value().isEqual(&nw->value())));
@@ -17,14 +25,33 @@ static bool isMonochrome(QuadTree<Frame> * nw, QuadTree<Frame> * ne, QuadTree<Fr
 
 QuadTree<Frame>* encodeFrame(int size, int i, int j, CImg<float> image)
 {
+	std::cout << "encode\n";
+
 	if (size == 1)
 	{ 
-		QuadLeaf<Frame> *leaf = new QuadLeaf<Frame>(Frame(image(i, j, 0), image(i, j, 1), image(i, j, 2), size));
+		QuadLeaf<Frame> *leaf;
+		if (image.spectrum() == 3)
+			leaf = new QuadLeaf<Frame>(Frame(image(i, j, 0), image(i, j, 1), image(i, j, 2), size));
+		else
+			leaf = new QuadLeaf<Frame>(Frame(image(i, j), size));
 		return leaf;
 	}
 
+	int m = size % 2;
 	int s = size / 2;
-	QuadTree<Frame> *sw = encodeFrame(s, i , j+s, image);
+
+	/*auto futuresw = std::thread(encodeFrame, s, i, j + s, image);
+	auto futurenw = std::thread(encodeFrame, s, i, j , image);
+	auto futurene = std::thread(encodeFrame, s, i+s, j , image);
+	auto futurese = std::thread(encodeFrame, s, i+s, j + s, image);
+
+
+	QuadTree<Frame> *sw = futuresw.get();
+	QuadTree<Frame> *nw = futurenw.get();
+	QuadTree<Frame> *ne = futurene.get();
+	QuadTree<Frame> *se = futurese.get();*/
+
+	QuadTree<Frame> *sw = encodeFrame(s, i, j + s, image);
 	QuadTree<Frame> *nw = encodeFrame(s, i, j, image);
 	QuadTree<Frame> *ne = encodeFrame(s, i+s, j , image);
 	QuadTree<Frame> *se = encodeFrame(s, i + s, j + s, image);
@@ -32,7 +59,7 @@ QuadTree<Frame>* encodeFrame(int size, int i, int j, CImg<float> image)
 	if (isMonochrome(nw, ne, se, sw))
 	{
 		Frame frameleaf = sw->value();
-		frameleaf.setSize(frameleaf.getSize() * 2);
+		frameleaf.setSize(frameleaf.getSize() + se->value().getSize());
 		return new QuadLeaf<Frame>(frameleaf);
 	}
 
@@ -41,14 +68,25 @@ QuadTree<Frame>* encodeFrame(int size, int i, int j, CImg<float> image)
 
 CImg<float> decodeFrame(QuadTree<Frame> *quadFrame)
 {
+	std::cout << "decode\n";
+
 	if (quadFrame != NULL)
 	{
 		if (quadFrame->isLeaf())
 		{
 			Frame monochromframe = quadFrame->value();
-			CImg<float> leafimg(1, 1, 1, 3, monochromframe.getRed(), monochromframe.getGreen(), monochromframe.getBlue());
-			leafimg.resize(monochromframe.getSize(), monochromframe.getSize());
-			return leafimg;
+			if (monochromframe.isGrey())
+			{
+				CImg<float> leafimg(1, 1, 1, 1, monochromframe.getGrey());
+				leafimg.resize(monochromframe.getSize(), monochromframe.getSize());
+				return leafimg;
+			}
+			else
+			{
+				CImg<float> leafimg(1, 1, 1, 3, monochromframe.getRed(), monochromframe.getGreen(), monochromframe.getBlue());
+				leafimg.resize(monochromframe.getSize(), monochromframe.getSize());
+				return leafimg;
+			}
 		}
 
 		else
@@ -71,20 +109,13 @@ CImg<float> decodeFrame(QuadTree<Frame> *quadFrame)
 int main()
 {
 	//CImg<float> image(INPUT_FILENAME);
-	CImg<float> image("chat.png");
-
-	/*
-	float pixvalR = image(10, 10, 0, 0); // read red val at coord 10,10
-	float pixvalG = image(10, 10, 0, 1); // read green val at coord 10,10
-	float pixvalB = image(10, 10, 0, 2); // read blue val at coord 10,10
-	*/
+	CImg<float> image("soleil.png");
 
 	int height = image.height();
 	int width = image.width();
 
 	if (width != height)
 		exit(1);
-
 
 	QuadTree<Frame> *quadimage;
 	quadimage = encodeFrame(width, 0, 0, image);
@@ -94,50 +125,17 @@ int main()
 	
 	CImg<float> newimage = decodeFrame(quadimage);
 
-	newimage.save("newchat.png");
+	newimage.save("newsoleil.png");
 
-
-	//display(quadimage);
-
-
-	
 	/*CImg<float> subimage1;
-
 	subimage1 = image.get_crop(0, 0, width / 2 -1, height - 1);
-	
 
 	CImg<float> subimage2;
-
 	subimage2 = image.get_crop(width / 2, 0, width-1,  height - 1);
+	subimage1.append(subimage2, 'x');
+	subimage1.save_png("chatreconstruit.png");*/
 
-	subimage2.append(subimage1, 'x');
-
-	subimage2.save_png("chatinvers.png");
-
-	CImg<float> subimage3(1,1, 1, 3, 255, 0, 0);
-
-	subimage3.resize(width / 2, height);
-
-	subimage3.append(subimage1, 'x');
-
-	subimage3.save_png("chatrouge.png");*/
-
-	/*for (int i = 0; i < width / 2; i++)
-	for (int j = 0; j < width / 2; j++)
-	{
-	subimage(i, j, 0) = image(i, j, 0);
-	subimage(i, j, 1) = image(i, j, 1);
-	subimage(i, j, 2) = image(i, j, 2);
-
-	}
+	/*image.save_png("savechat.png", 24);*/	
 
 
-	/*image(0, height, 0) = 255;
-	image(0, height, 1) = 0;
-	image(0, height, 2) = 255;*/
-
-
-	/*CImgDisplay main_disp(subimage);
-	subimage.save_png("chatbis.png");
-	float b = 5;*/
 }
