@@ -159,14 +159,14 @@ QuadTree<Frame>* encodeFrame(int width, int i, int j, int widthheightdiff)
 }
 
 
-QuadTree<Frame>* encodeFrameColor(int width, int i, int j, int widthheightdiff)
+QuadTree<Frame>* encodeFrameColor(int width, int i, int j, int height)
 {
-	if ((width == 0) || (width-widthheightdiff == 0) )
+	if ((width == 0) || (height == 0) )
 	{
 		return new QuadLeaf<Frame>(Frame());
 	}
 
-	if ((width == 1) && (widthheightdiff==0) )
+	if ((width == 1) && (height ==  1) )
 	{
 		return new QuadLeaf<Frame>(Frame(imagecon(i, j, 0), imagecon(i, j, 1), imagecon(i, j, 2)));
 	}
@@ -178,23 +178,22 @@ QuadTree<Frame>* encodeFrameColor(int width, int i, int j, int widthheightdiff)
 
 	if (width == 1)
 	{
-		sw = encodeFrameColor(1, i, j + 1, 0);
-		nw = encodeFrameColor(1, i, j, 0);
+		sw = encodeFrameColor(1, i, j + 1, 1);
+		nw = encodeFrameColor(1, i, j, 1);
 		ne = encodeFrameColor(0, i + 1, j, 0);
 		se = encodeFrameColor(0, i + 1, j + 1, 0);
 	}
 	else
 	{
-		if (width - widthheightdiff == 1)
+		if (height == 1)
 		{
 			sw = encodeFrameColor(0, i, j + 1, 0);
-			nw = encodeFrameColor(1, i, j, 0);
-			ne = encodeFrameColor(1, i + 1, j, 0);
+			nw = encodeFrameColor(1, i, j, 1);
+			ne = encodeFrameColor(1, i + 1, j, 1);
 			se = encodeFrameColor(0, i + 1, j + 1, 0);
 		}
 		else
 		{
-			int height = width - widthheightdiff;
 			int w = width / 2;
 			int h = height / 2;
 			int m = width % 2;
@@ -202,17 +201,17 @@ QuadTree<Frame>* encodeFrameColor(int width, int i, int j, int widthheightdiff)
 			int wm = w + m;
 			int hn = h + n;
 
-			sw = encodeFrameColor(wm, i, j + hn, wm - h);
-			nw = encodeFrameColor(wm, i, j, wm - hn);
-			ne = encodeFrameColor(w, i + wm, j, w - hn);
-			se = encodeFrameColor(w, i + wm, j + hn, w - h);
+			sw = encodeFrameColor(wm, i, j + hn, h);
+			nw = encodeFrameColor(wm, i, j, hn);
+			ne = encodeFrameColor(w, i + wm, j, hn);
+			se = encodeFrameColor(w, i + wm, j + hn, h);
 		}
 	}
 
 	if (isMonochromeColor(nw, ne, se, sw))
 	{
 		Frame frameleaf = nw->value();
-		frameleaf.setDims(width, width-widthheightdiff);
+		frameleaf.setDims(width, height);
 		return new QuadLeaf<Frame>(frameleaf);
 	}
 
@@ -363,8 +362,6 @@ CImg<int> decodeFrame(QuadTree<Frame> *quadFrame)
 	}
 }
 
-//CImg<int> imagecon("chat.png");
-
 
 int main(int argc, char* argv[])
 {
@@ -414,7 +411,7 @@ int main(int argc, char* argv[])
 		if (imagecon.spectrum() == 1)
 		{
 			std::cout << "starting encode\n";
-			quadimage = encodeFrame(width, 0, 0, width - height);
+			quadimage = encodeFrame(width, 0, 0, height);
 			std::cout << "finished encode\n";
 
 			std::cout << "starting decode\n";
@@ -424,7 +421,7 @@ int main(int argc, char* argv[])
 		else
 		{
 			std::cout << "starting encode color\n";
-			quadimage = encodeFrameColor(width, 0, 0, width - height);
+			quadimage = encodeFrameColor(width, 0, 0, height);
 			std::cout << "finished encode color\n";
 
 			std::cout << "starting decode color\n";
