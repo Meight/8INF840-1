@@ -98,14 +98,14 @@ QuadTree<Frame>* encodeFrameColorDicho(int size, int i, int j)
 	return new QuadNode<Frame>(nw, ne, se, sw);
 }
 
-QuadTree<Frame>* encodeFrame(int width, int i, int j, int widthheightdiff)
+QuadTree<Frame>* encodeFrame(int width, int i, int j, int height)
 {
-	if ((width == 0) || (width - widthheightdiff == 0))
+	if ((width == 0) || (height == 0))
 	{
 		return new QuadLeaf<Frame>(Frame());
 	}
 
-	if ((width == 1) && (widthheightdiff == 0))
+	if ((width == 1) && (height == 1))
 	{
 		return new QuadLeaf<Frame>(Frame(imagecon(i, j)));
 	}
@@ -117,23 +117,22 @@ QuadTree<Frame>* encodeFrame(int width, int i, int j, int widthheightdiff)
 
 	if (width == 1)
 	{
-		sw = encodeFrame(1, i, j + 1, 0);
-		nw = encodeFrame(1, i, j, 0);
+		sw = encodeFrame(1, i, j + 1, 1);
+		nw = encodeFrame(1, i, j, 1);
 		ne = encodeFrame(0, i + 1, j, 0);
 		se = encodeFrame(0, i + 1, j + 1, 0);
 	}
 	else
 	{
-		if (width - widthheightdiff == 1)
+		if (height == 1)
 		{
 			sw = encodeFrame(0, i, j + 1, 0);
-			nw = encodeFrame(1, i, j, 0);
-			ne = encodeFrame(1, i + 1, j, 0);
+			nw = encodeFrame(1, i, j, 1);
+			ne = encodeFrame(1, i + 1, j, 1);
 			se = encodeFrame(0, i + 1, j + 1, 0);
 		}
 		else
 		{
-			int height = width - widthheightdiff;
 			int w = width / 2;
 			int h = height / 2;
 			int m = width % 2;
@@ -141,23 +140,22 @@ QuadTree<Frame>* encodeFrame(int width, int i, int j, int widthheightdiff)
 			int wm = w + m;
 			int hn = h + n;
 
-			sw = encodeFrame(wm, i, j + hn, wm - h);
-			nw = encodeFrame(wm, i, j, wm - hn);
-			ne = encodeFrame(w, i + wm, j, w - hn);
-			se = encodeFrame(w, i + wm, j + hn, w - h);
+			sw = encodeFrame(wm, i, j + hn, h);
+			nw = encodeFrame(wm, i, j, hn);
+			ne = encodeFrame(w, i + wm, j, hn);
+			se = encodeFrame(w, i + wm, j + hn, h);
 		}
 	}
 
-	if (isMonochrome(nw, ne, se, sw))
+	if (isMonochromeColor(nw, ne, se, sw))
 	{
 		Frame frameleaf = nw->value();
-		frameleaf.setDims(width, width - widthheightdiff);
+		frameleaf.setDims(width, height);
 		return new QuadLeaf<Frame>(frameleaf);
 	}
 
 	return new QuadNode<Frame>(nw, ne, se, sw);
 }
-
 
 QuadTree<Frame>* encodeFrameColor(int width, int i, int j, int height)
 {
