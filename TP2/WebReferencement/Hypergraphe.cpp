@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Hypergraphe.h"
+#include "LUrlParser.h"
 
+using LUrlParser::clParseURL;
 
 Hypergraphe::Hypergraphe(GroupingStrategy groupingStrategy)
 {
@@ -15,18 +17,23 @@ Hypergraphe::~Hypergraphe()
 
 string Hypergraphe::createLabelFromLink(string & url)
 {
+	clParseURL URL = clParseURL::ParseURL(url);
+
+	if (!URL.IsValid())
+		return url;
+
 	switch (strategy) {
 	case BY_PAGE:
 		return url;
 		break;
 	case BY_DOMAIN:
-		return string();
+		return URL.m_Host;
 		break;
 	case BY_HOST:
-		return string();
+		return URL.m_Host;
 		break;
 	default:
-		return string();
+		return url;
 		break;
 	}
 }
