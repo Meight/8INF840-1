@@ -54,3 +54,21 @@ void Hypergraphe::addPage(string & url)
 
 	cout << "Added page " << url << " to label " << label << endl;
 }
+
+void Hypergraphe::print()
+{
+	VertexSetsType::iterator it;
+
+	cout << "Printing hypergraph..." << endl;
+
+	string lastLabel;
+	for (it = vertexSets.begin(); it != vertexSets.end(); ++it)
+	{
+		cout << "[" << it->first << "]\n ================" << endl;
+
+		for (auto& vertex : it->second)
+			cout << "--- " << vertex << endl;
+
+		cout << endl;
+	}
+}

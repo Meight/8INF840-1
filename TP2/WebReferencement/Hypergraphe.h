@@ -22,5 +22,6 @@ public:
 	~Hypergraphe();
 	Hypergraphe(GroupingStrategy strategy);
 	void addPage(string& url);
+	void print();
 };
 
