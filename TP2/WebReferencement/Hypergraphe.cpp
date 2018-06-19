@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Hypergraphe.h"
 #include "LUrlParser.h"
+#include <windows.h>
 
 using LUrlParser::clParseURL;
 
@@ -59,13 +60,19 @@ void Hypergraphe::print()
 {
 	VertexSetsType::iterator it;
 
-	cout << "Printing hypergraph..." << endl;
+	HANDLE  hConsole;
+
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	cout << endl << "Printing hypergraph..." << endl << endl;
 
 	string lastLabel;
 	for (it = vertexSets.begin(); it != vertexSets.end(); ++it)
 	{
-		cout << "[" << it->first << "]\n ================" << endl;
+		SetConsoleTextAttribute(hConsole, 12);
+		cout << "[" << it->first << "]" << endl;
 
+		SetConsoleTextAttribute(hConsole, 15);
 		for (auto& vertex : it->second)
 			cout << "--- " << vertex << endl;
 
