@@ -1,0 +1,12 @@
+10
+node id | outdegree | URL
+1 1 http://de.osha.eu.int/de/print/statistics/EW2002_IBM_Massnahmen_gegen_Stress_am_Arbeitsplatz.php
+4 2 http://de.osha.eu.int/de/print/statistics/EW2002_A_Boehm_Ausstieg_aus_dem_Arbeitsleben.php
+5 3 http://de.osha.eu.int/de/print/statistics/EW2002_Motorola_Stresspraevention_u_Gesundheitsfoerderung.php
+3 0 http://euro.eu.int/comm/relays/edc_de.htm
+8 0 http://euro.eu.int/comm/relays/edc_el.htm
+9 0 http://euro.eu.int/comm/relays/edc_en.htm
+10 0 http://euro.eu.int/comm/relays/edc_es.htm
+6 1 http://europa.eu.int/comm/dgs/press_communication/index_da.htm
+7 0 http://europa.eu.int/europedirect/index_da.htm
+2 1 http://mondomaine.fr/home.htm
