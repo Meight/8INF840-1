@@ -360,6 +360,18 @@ CImg<int> decodeFrame(QuadTree<Frame> *quadFrame)
 	}
 }
 
+std::ostream & operator<<(std::ostream & out, Frame & frame)
+{
+	if (frame.getSize() == 0) {
+		out << 0;
+	}
+	else {
+		out << frame.getRed() << "/" << frame.getGreen() << "/" << frame.getBlue();
+	}
+	
+	return out;
+}
+
 
 int main(int argc, char* argv[])
 {
@@ -368,6 +380,7 @@ int main(int argc, char* argv[])
 	std::cin >> filename;
 
 	imagecon = CImg<int>(filename);
+	imagecon.save("temoin.png");
 
 	std::cout << "Specify the name of the file where the decoded image will be saved:";
 	char* filesave = new char[MAX_LENGTH];
@@ -430,5 +443,16 @@ int main(int argc, char* argv[])
 
 	newimage.save(filesave);
 	std::cout << "Decoded image saved.";
+
+	std::cout << "Do you want to see the corresponding QuadTree? [y/n]" ;
+	char answer;
+	std::cin >> answer;
+
+	if (answer == 'y') {
+		display(quadimage);
+	}
+	else {
+		std::cout << "Closing the application";
+	}
 
 }
