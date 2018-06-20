@@ -360,14 +360,22 @@ CImg<int> decodeFrame(QuadTree<Frame> *quadFrame)
 	}
 }
 
+bool isColor;
+
 std::ostream & operator<<(std::ostream & out, Frame & frame)
 {
 	if (frame.getSize() == 0) {
-		out << 0;
+		out << "no pixel";
 	}
 	else {
-		out << frame.getRed() << "/" << frame.getGreen() << "/" << frame.getBlue();
+		if (isColor) {
+			out << frame.getRed() << "/" << frame.getGreen() << "/" << frame.getBlue();
+		}
+		else {
+			out << frame.getGrey();
+		}
 	}
+
 	
 	return out;
 }
@@ -397,6 +405,7 @@ int main(int argc, char* argv[])
 	{
 		if (imagecon.spectrum() == 1)
 		{
+			isColor = false;
 			std::cout << "starting encode grey dicho\n";
 			quadimage = encodeFrameDicho(width, 0, 0);
 			std::cout << "finished encode grey dicho\n";
@@ -408,6 +417,7 @@ int main(int argc, char* argv[])
 
 		else
 		{
+			isColor = true;
 			std::cout << "starting encode color dicho\n";
 			quadimage = encodeFrameColorDicho(width, 0, 0);
 			std::cout << "finished encode color dicho\n";
@@ -421,6 +431,7 @@ int main(int argc, char* argv[])
 	{
 		if (imagecon.spectrum() == 1)
 		{
+			isColor = false;
 			std::cout << "starting encode\n";
 			quadimage = encodeFrame(width, 0, 0, height);
 			std::cout << "finished encode\n";
@@ -431,6 +442,7 @@ int main(int argc, char* argv[])
 		}
 		else
 		{
+			isColor = true;
 			std::cout << "starting encode color\n";
 			quadimage = encodeFrameColor(width, 0, 0, height);
 			std::cout << "finished encode color\n";
