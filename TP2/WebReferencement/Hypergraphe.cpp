@@ -291,7 +291,7 @@ map<int, float> Hypergraphe::inDegree()
 {
 	map<int, float> scorePages;
 	for (auto& c : pointedByCluster) {
-		scorePages[c.first] = c.second.size();
+		scorePages[c.first] = (float) c.second.size();
 	}
 	return scorePages;
 }
