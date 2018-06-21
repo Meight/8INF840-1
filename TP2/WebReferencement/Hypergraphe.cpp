@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <cmath>
 
 using LUrlParser::clParseURL;
 
@@ -184,4 +185,113 @@ void Hypergraphe::load(string pathNodes, string pathEdges)
 		cerr << "Could not open the edges file !" << endl;
 	}
 
+}
+
+map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
+{
+	map<string, float> scoreClusters;
+	map<string,map<int, float>> scorePages;
+
+	// Count the number of pages with incoming hyperarcs in the collections
+	map<string, int> pagesCount;
+	for (auto& cluster : vertexSets) {
+		pagesCount[cluster.first] = 0;
+		for (auto& vertex : cluster.second) {
+			if (pointedByCluster[vertex->id].size() > 0) {
+				++pagesCount[cluster.first];
+			}
+		}
+	}
+
+	// Initialization
+	cout << "--- Init :" << endl;
+	for (auto& cluster : vertexSets) {
+		string name = cluster.first;
+		VertexSetType set = cluster.second;
+
+		// Compute score of the pages
+		for (auto& vertex : set) {
+			scorePages[name][vertex->id] = (pagesCount[name] == 0) ? 0.0f : 1.0f / pagesCount[name];
+			cout << "    Score page " << vertex->id << ": " << scorePages[name][vertex->id] << endl;
+		}
+
+		// Compute score of the cluster
+		scoreClusters[name] = 0;
+		for (auto& score : scorePages[name]) {
+			scoreClusters[name] = scoreClusters[name] + score.second;
+		}
+		cout << "      => Score cluster \"" << name << "\": " << scoreClusters[name] << endl;
+		cout << endl;
+	}
+	
+	// Compute the reputation of the clusters until convergence
+	bool done = false;
+	map<string, float> delta;
+	do 
+	{
+		system("Pause");
+		cout << "--- Iter :" << endl;
+		for (auto& cluster : vertexSets) {
+			string name = cluster.first;
+			VertexSetType set = cluster.second;
+
+			// Keep the old score
+			delta[name] = scoreClusters[name];
+
+			// Update the score of the cluster
+			for (auto& vertex : set) {
+				float score = 0;
+				for (auto& c : pointedByCluster[vertex->id]) {
+					score += (scoreClusters[c] / clusterOutDegree[c]) + (dampening / pagesCount[name]);
+				}
+				score = score * (1 - dampening);
+				scorePages[name][vertex->id] = score;
+				cout << "    Score page " << vertex->id << ": " << scorePages[name][vertex->id] << endl;
+			}
+
+			// Update the score of the cluster
+			scoreClusters[name] = 0;
+			for (auto& score : scorePages[name]) {
+				scoreClusters[name] = scoreClusters[name] + score.second;
+			}
+			cout << "      => Score cluster \"" << name << "\": " << scoreClusters[name] << endl;
+			cout << endl;
+		}
+		
+		// Has it converged ?
+		cout << "    --- Does it converge ? " << endl;
+		done = true;
+		for (auto& val : delta) {
+			cout << "        Cluster \"" << val.first << "\": delta = " << fabs(val.second - scoreClusters[val.first]);
+			if ( fabs(val.second-scoreClusters[val.first]) > epsilon) {
+				done = false;
+				cout << "  --- NOT OK ---" << endl;
+			}
+			else {
+				cout << "  --- OK ---" << endl;
+			}
+		}
+
+	} while (!done);
+	
+	cout << endl << "----------------------- CONVERGENCE !! ----------------------- " << endl << endl;
+
+	// Prepare result
+	map<int, float> result;
+	for (auto& c : scorePages) {
+		for (auto& p : c.second) {
+			result[p.first] = p.second;
+		}
+	}
+
+	return result;
+}
+
+map<int, float> Hypergraphe::inDegree()
+{
+	map<int, float> scorePages;
+	for (auto& c : pointedByCluster) {
+		scorePages[c.first] = c.second.size();
+	}
+	return scorePages;
 }
