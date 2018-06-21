@@ -38,5 +38,7 @@ public:
 	void addPage(Vertex* vertex);
 	void print();
 	void load(string pathNodes, string pathEdges);
+	map<int, float> pageRank(float dampening, float epsilon);
+	map<int, float> inDegree();
 };
 
