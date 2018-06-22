@@ -12,22 +12,21 @@ class Node {
 public:
 	int size;
 
-	Node() : marked(false), goal(false), nodeType(0), predecessor(nullptr), cost(0){
+	Node() : marked(false), goal(false), predecessor(nullptr), cost(0){
 
 	}
 
-	int nodeType;
-	int distance;
-	int cost;
-	bool marked;
-	bool goal;
-	int x;
-	int y;
-	list <Node *> neighbors;
-	Node * predecessor;
+	int distance; //distance de Manhattan par rapport au noeud cible
+	int cost;  //cout de deplacement pour se rendre à ce noeud
+	bool marked; // a été visité ou non
+	bool goal; // est un noeud objectif ou non
+	int x; //"coordonnée en largeur"
+	int y;//"coordonnée en hauteur
+	list <Node *> neighbors; //liste des voisins du noeud
+	Node * predecessor; //prédecesseur du noeud
 
 	void addNeighbor(Node * n) { neighbors.push_back(n); }
-	bool mark();//deque<Node *> & queue
+	bool mark();
 	int getTotalCost();
 
 

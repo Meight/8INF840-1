@@ -6,7 +6,7 @@
 #include "stdafx.h"
 #include "Node.h"
 
-bool Node::mark() { //cette fonction marque le noeud comme visité et renvoi true ou false en fonction de si il a déjà été visité ou non.
+bool Node::mark() {
 
 	if (this == nullptr || this->marked == true) {
 		return false;
@@ -19,6 +19,6 @@ bool Node::mark() { //cette fonction marque le noeud comme visité et renvoi true
 	return false;
 }
 
-int Node::getTotalCost() { //cette fonction renvoie le coût total du noeud
+int Node::getTotalCost() {
 	return cost + distance;
 }

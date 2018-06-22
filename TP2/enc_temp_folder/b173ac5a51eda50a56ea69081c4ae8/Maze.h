@@ -10,11 +10,11 @@ using namespace std;
 class Maze {
 
 public:
-	int size; //le labyrinthe sera de cette taille en largeur et en longueur
-	Node * source; //noeud source
-	Node * goal; //noeud objectif
-	deque<Node *> queue;  //file dans laquelle les noeuds à visiter seront placés
-	deque<Node *> nodes; //ensemble des noeuds
+	int size;
+	Node * source;
+	Node * goal;
+	deque<Node *> queue;
+	deque<Node *> nodes;
 
 
 	Maze(int size) :size(size) {
