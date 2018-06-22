@@ -26,7 +26,8 @@ public:
 		this->defineNodes();
 
 	}
-
+	bool containsNode(list<Node *> nodelist, Node * node);
+	void defineNeighbors();
 	void defineNodes();
 	void BFS();
 	void Astar();

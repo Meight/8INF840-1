@@ -6,8 +6,7 @@
 #include "stdafx.h"
 #include "Node.h"
 
-bool Node::mark() {//deque<Node *>
-	//&queue
+bool Node::mark() {
 
 	if (this == nullptr || this->marked == true) {
 		return false;
@@ -17,15 +16,6 @@ bool Node::mark() {//deque<Node *>
 	if (this->goal) {
 		return true;
 	}
-	/*
-	list <Node *>::iterator currentnode, lastnode;
-	currentnode = neighbors.begin();
-	lastnode = neighbors.end();
-	for (; currentnode != lastnode; ++currentnode) {
-		if ((*currentnode)->marked == false){
-			queue.push_back (*currentnode);
-		}
-	}*/
 	return false;
 }
 
