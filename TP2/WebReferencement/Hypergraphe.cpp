@@ -6,6 +6,8 @@
 #include <sstream>
 #include <algorithm>
 #include <cmath>
+#include <time.h>
+
 
 using LUrlParser::clParseURL;
 
@@ -17,31 +19,37 @@ Hypergraphe::Hypergraphe(GroupingStrategy groupingStrategy)
 
 Hypergraphe::~Hypergraphe()
 {
+	for (auto& v : vertices)
+		delete v.second;
 }
 
 #include <iostream>
 
 string Hypergraphe::createLabelFromLink(string & url)
 {
-	clParseURL URL = clParseURL::ParseURL(url);
+	if (url.size() > 0) {
+		clParseURL URL = clParseURL::ParseURL(url);
 
-	if (!URL.IsValid())
-		return url;
+		if (!URL.IsValid())
+			return url;
 
-	switch (strategy) {
-	case BY_PAGE:
-		return url;
-		break;
-	case BY_DOMAIN:
-		return URL.m_Host;
-		break;
-	case BY_HOST:
-		return URL.m_Host;
-		break;
-	default:
-		return url;
-		break;
+		switch (strategy) {
+		case BY_PAGE:
+			return url;
+			break;
+		case BY_DOMAIN:
+			return URL.m_Host;
+			break;
+		case BY_HOST:
+			return URL.m_Host;
+			break;
+		default:
+			return url;
+			break;
+		}
 	}
+
+	return string("Invalid URL");
 }
 
 string Hypergraphe::getVertexLabel(string & url)
@@ -58,7 +66,6 @@ void Hypergraphe::addPage(Vertex* vertex)
 
 	vertexSets[label].push_back(vertex);
 
-	cout << "Added page " << vertex->url << " to label " << label << endl;
 }
 
 void Hypergraphe::print()
@@ -93,7 +100,6 @@ void Hypergraphe::print()
 	}
 }
 
-
 void Hypergraphe::load(string pathNodes, string pathEdges) 
 {
 	ifstream fileNodes(pathNodes, ios::in);
@@ -102,11 +108,18 @@ void Hypergraphe::load(string pathNodes, string pathEdges)
 	// Create clusters
 	if (fileNodes)
 	{
+		double treatedLines = 0;
+
 		string line;
 
 		// Skip the first 2 lines
 		getline(fileNodes, line);
+
+		int lines = stoi(line);
+
 		getline(fileNodes, line);
+
+		long t = time(0);
 
 		// Create vertices
 		while (getline(fileNodes, line)) {
@@ -120,16 +133,25 @@ void Hypergraphe::load(string pathNodes, string pathEdges)
 			}
 
 			// Add vertex to the map
-			Vertex* v = new Vertex;
-			v->id = stoi(elements.at(0));
-			v->outDegree = stoi(elements.at(1));
-			v->inDegree = 0;
-			v->url = elements.at(2);
-			vertices[v->id] = v;
-			addPage(v);
-			cout << "Vertice " << v->id << " added" << endl;
+			if (elements.size() >= 3) {
+				Vertex* v = new Vertex;
+				v->id = stoi(elements.at(0));
+				v->outDegree = stoi(elements.at(1));
+				v->inDegree = 0;
+				v->url = elements.at(2);
+				vertices[v->id] = v;
+				addPage(v);
+			}
+
+			treatedLines++;
 
 			elements.clear();
+
+			if (time(0) > t) {
+				cout << "Loading nodes: " << vertices.size() << " (" << (treatedLines / lines) * 100. << "%)" << endl;
+
+				t = time(0);
+			}
 		}
 
 		fileNodes.close();
@@ -139,15 +161,21 @@ void Hypergraphe::load(string pathNodes, string pathEdges)
 		cerr << "Could not open the nodes file !" << endl;
 	}
 
+	cout << "Done loading nodes. Amount of nodes: " << vertices.size() << endl;
+
 	// Create hyperEdges
 	if (fileEdges)
 	{
+		double treatedLines = 0;
 		string line;
 
 		// Skip the first 2 lines
 		getline(fileEdges, line);
+		int lines = stoi(line);
+
 		getline(fileEdges, line);
 
+		long t = time(0);
 		
 		while (getline(fileEdges, line)) {
 			// Find the source and destination of the edge
@@ -158,25 +186,44 @@ void Hypergraphe::load(string pathNodes, string pathEdges)
 				iss >> word;
 				elements.push_back(word);
 			}
-			int fromVertex = stoi(elements.at(0));
-			int toVertex = stoi(elements.at(1));
 
-			if (fromVertex != toVertex) {
-				// Get the label of the cluster of the two vertices
-				string labelFrom = getVertexLabel(vertices[fromVertex]->url);
-				string labelTo = getVertexLabel(vertices[toVertex]->url);
+			if (elements.size() >= 2) {
+				int fromVertexID = stoi(elements.at(0));
+				int toVertexID = stoi(elements.at(1));
 
-				if (labelFrom != labelTo) {
-					// Check if the pages is not already pointed by the cluster
-					if (find(pointedByCluster[toVertex].begin(), pointedByCluster[toVertex].end(), labelFrom) == pointedByCluster[toVertex].end()) {
-						pointedByCluster[toVertex].push_back(labelFrom);
-						++clusterOutDegree[labelFrom];
+				if (fromVertexID != toVertexID) {
+					Vertex* vertexFrom = vertices[fromVertexID];
+					Vertex* vertexTo = vertices[toVertexID];
+
+					if (vertexFrom != nullptr && vertexTo != nullptr) {
+						// Get the label of the cluster of the two vertices
+						string labelFrom = getVertexLabel(vertexFrom->url);
+						string labelTo = getVertexLabel(vertexTo->url);
+
+						if (labelFrom != labelTo) {
+							// Check if the pages is not already pointed by the cluster
+							if (find(pointedByCluster[toVertexID].begin(), pointedByCluster[toVertexID].end(), labelFrom) == pointedByCluster[toVertexID].end()) {
+								pointedByCluster[toVertexID].push_back(labelFrom);
+								++clusterOutDegree[labelFrom];
+							}
+						}
 					}
+				}
+
+				treatedLines++;
+
+				if (time(0) > t) {
+					cout << "Loading eges: " << pointedByCluster.size() << " (" << (treatedLines / lines) * 100. << "%)" << endl;
+
+					t = time(0);
 				}
 			}
 
+
 			elements.clear();
 		}
+
+		cout << "Done loading edges." << endl;
 
 		fileEdges.close();
 	}
@@ -212,7 +259,6 @@ map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
 		// Compute score of the pages
 		for (auto& vertex : set) {
 			scorePages[name][vertex->id] = (pagesCount[name] == 0) ? 0.0f : 1.0f / pagesCount[name];
-			cout << "    Score page " << vertex->id << ": " << scorePages[name][vertex->id] << endl;
 		}
 
 		// Compute score of the cluster
@@ -220,8 +266,7 @@ map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
 		for (auto& score : scorePages[name]) {
 			scoreClusters[name] = scoreClusters[name] + score.second;
 		}
-		cout << "      => Score cluster \"" << name << "\": " << scoreClusters[name] << endl;
-		cout << endl;
+
 	}
 	
 	// Compute the reputation of the clusters until convergence
@@ -229,8 +274,7 @@ map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
 	map<string, float> delta;
 	do 
 	{
-		system("Pause");
-		cout << "--- Iter :" << endl;
+
 		for (auto& cluster : vertexSets) {
 			string name = cluster.first;
 			VertexSetType set = cluster.second;
@@ -246,7 +290,6 @@ map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
 				}
 				score = score * (1 - dampening);
 				scorePages[name][vertex->id] = score;
-				cout << "    Score page " << vertex->id << ": " << scorePages[name][vertex->id] << endl;
 			}
 
 			// Update the score of the cluster
@@ -254,21 +297,15 @@ map<int, float> Hypergraphe::pageRank(float dampening, float epsilon)
 			for (auto& score : scorePages[name]) {
 				scoreClusters[name] = scoreClusters[name] + score.second;
 			}
-			cout << "      => Score cluster \"" << name << "\": " << scoreClusters[name] << endl;
-			cout << endl;
 		}
 		
 		// Has it converged ?
-		cout << "    --- Does it converge ? " << endl;
 		done = true;
 		for (auto& val : delta) {
-			cout << "        Cluster \"" << val.first << "\": delta = " << fabs(val.second - scoreClusters[val.first]);
 			if ( fabs(val.second-scoreClusters[val.first]) > epsilon) {
 				done = false;
-				cout << "  --- NOT OK ---" << endl;
 			}
 			else {
-				cout << "  --- OK ---" << endl;
 			}
 		}
 
