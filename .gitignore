@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/TP2/WebReferencement/nodesBig.txt
+/TP2/WebReferencement/edgesBig.txt
